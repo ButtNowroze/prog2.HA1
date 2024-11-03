@@ -118,8 +118,16 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
 
+    // Teilaufgabe 03: Zweites Bugfixing
+
     public void pressEqualsKey() {
-        var result = switch(latestOperation) {
+        double result;
+        if (latestOperation.equals("/") && Double.parseDouble(screen) == 0) {
+            screen = "Error"; // Bugfix: Fehlerbehandlung für Division durch Null
+            return;
+        }
+
+        result = switch(latestOperation) {
             case "+" -> latestValue + Double.parseDouble(screen);
             case "-" -> latestValue - Double.parseDouble(screen);
             case "x" -> latestValue * Double.parseDouble(screen);
