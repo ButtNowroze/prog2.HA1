@@ -89,6 +89,70 @@ class CalculatorTest {
     }
 
 
-    //TODO hier weitere Tests erstellen
+    // Teilaufgabe 01: Neu hinzugefügter Test für die Vorzeichenumkehr
+
+    @Test
+    @DisplayName("should correctly toggle the sign of a positive number")
+    void testTogglePositiveSign() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(5);
+        calc.pressNegativeKey(); // Vorzeichen umkehren
+
+        String expected = "-5";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should correctly toggle the sign of a negative number")
+    void testToggleNegativeSign() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(5);
+        calc.pressNegativeKey(); // Vorzeichen auf negativ setzen
+        calc.pressNegativeKey(); // Vorzeichen zurück auf positiv setzen
+
+        String expected = "5";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+
+    //Teilaufgabe 02: Neue Tests für Fehlerkategorie
+
+    @Test
+    @DisplayName("should display error when trying to divide by zero using equals key")
+    void testDivisionByZeroWithEquals() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(8);
+        calc.pressBinaryOperationKey("/");
+        calc.pressDigitKey(0);
+        calc.pressEqualsKey(); // Division durch Null
+
+        String expected = "Error";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should throw exception when trying to calculate square root of a negative number")
+    void testSquareRootNegativeException() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(3);
+        calc.pressNegativeKey(); // Negative Zahl
+        calc.pressUnaryOperationKey("√"); // Quadratwurzel von negativ
+
+        String expected = "Error";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
 }
 
