@@ -71,10 +71,19 @@ public class Calculator {
      * der Bildschirminhalt mit dem Ergebnis aktualisiert.
      * @param operation "√" für Quadratwurzel, "%" für Prozent, "1/x" für Inversion
      */
+
+    //Teilaufgabe 03: Erstes Bugfixing
+
     public void pressUnaryOperationKey(String operation) {
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
-        var result = switch(operation) {
+        double result;
+        if (operation.equals("√") && latestValue < 0) {
+            screen = "Error"; // Bugfix: Fehlerbehandlung für negative Quadratwurzel
+            return;
+        }
+
+        result = switch(operation) {
             case "√" -> Math.sqrt(Double.parseDouble(screen));
             case "%" -> Double.parseDouble(screen) / 100;
             case "1/x" -> 1 / Double.parseDouble(screen);
